@@ -16,8 +16,9 @@ This repository will host the official implementation of our UAI 2026 paper:
 Graph neural networks (GNNs) have become a dominant paradigm for crystal structure representation and property prediction, but adapting large pretrained crystal encoders to new downstream properties typically requires expensive full fine-tuning. This work introduces a **model-agnostic graph prompt learning** framework that adapts frozen, pretrained crystal GNN encoders to downstream property-prediction tasks by learning lightweight, task-specific graph prompts, rather than updating the full set of backbone parameters.
  
 The proposed approach is designed to plug into a variety of crystal GNN backbones, offering an efficient and generalizable alternative to full fine-tuning for crystal property prediction.
- 
-*(A detailed technical description, architecture diagram, and results table will be added once the code and camera-ready paper are released.)*
+
+<img width="1970" height="982" alt="image" src="https://github.com/user-attachments/assets/0f1ac6ff-57fa-4ecf-bf32-701162b0ba12" />
+
 
 ## 📦 Repository Structure
 
