@@ -19,8 +19,64 @@ The proposed approach is designed to plug into a variety of crystal GNN backbone
  
 *(A detailed technical description, architecture diagram, and results table will be added once the code and camera-ready paper are released.)*
 
-## 🚧 Code Release
- 
-The source code are being finalized and **will be uploaded shortly**. Please **stay tuned** — star/watch this repository to get notified as soon as it's available!
+## 📦 Repository Structure
 
+This repository contains a reference implementation of our graph prompt learning
+framework applied to the **Matformer** backbone.
+
+```
+Prompt-main/
+├── LICENSE
+├── requirements.txt
+└── matformer/
+    ├── config.py            # Training / model configuration
+    ├── data.py              # Dataset loading and preprocessing
+    ├── features.py          # Atom / crystal feature construction
+    ├── graphs.py            # Crystal-graph construction utilities
+    ├── train.py             # Core training loop
+    ├── train_props.py       # Generic property-training entry (train_prop_model)
+    ├── train_jv.py          # JARVIS-DFT property training entry point
+    ├── train_mp.py          # Materials Project (MEGNet) training entry point
+    ├── utils.py
+    ├── models/
+    │   ├── pyg_att.py        # Matformer backbone + graph prompt modules
+    │   │                     #   (NodePrompt + graph-level prompt embedding)
+    │   ├── transformer.py
+    │   ├── bn_utils.py
+    │   └── utils.py
+    ├── mp_bulk/             # MP bulk-modulus splits (train/val/test .pkl)
+    └── mp_shear/            # MP shear-modulus splits (train/val/test .pkl)
+```
+
+The graph prompts are implemented in `matformer/models/pyg_att.py`:
+a node-level prompt (`NodePrompt`) is added to the node features and a graph-level
+prompt embedding is injected, while the pretrained backbone stays frozen.
+
+## ⚙️ Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+> The pinned versions target **PyTorch 2.1.1 + CUDA 12.1** (with DGL and
+> PyTorch Geometric wheels for the same build). Adjust the index URLs in
+> `requirements.txt` if you use a different CUDA / PyTorch version.
+
+## 🚀 Training
+
+From inside the `matformer/` folder:
+
+```bash
+cd matformer
+
+# JARVIS-DFT properties (formation energy, band gap, bulk/shear modulus, ...)
+python train_jv.py
+
+# Materials Project (MEGNet) properties (e_form, gap, bulk/shear modulus)
+python train_mp.py
+```
+
+Select the target property by editing the `prop` variable in the corresponding
+entry script, or call `train_prop_model(...)` from `train_props.py` directly to
+customize the learning rate, batch size, number of epochs, and dataset.
 
